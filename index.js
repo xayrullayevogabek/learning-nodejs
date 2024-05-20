@@ -1,15 +1,44 @@
 const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
 const server = http.createServer((req, res) => {
   if (req.method === "GET") {
     res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(`
-        <h2>Send Your Name</h2>
-        <form action="/" method="POST">
-            <input type="text" name="name" />
-            <button type="submit">Send Name</button>
-        </form>
-    `);
+
+    if (req.url === "/") {
+      fs.readFile(
+        path.join(__dirname, "templates/index.html"),
+        (err, content) => {
+          if (err) throw new Error();
+          res.end(content);
+        }
+      );
+    } else if (req.url === "/about") {
+      fs.readFile(
+        path.join(__dirname, "templates", "about.html"),
+        (err, content) => {
+          if (err) throw new Error();
+          res.end(content);
+        }
+      );
+    } else if (req.url === "/blog") {
+      fs.readFile(
+        path.join(__dirname, "templates", "blog.html"),
+        (err, content) => {
+          if (err) throw new Error();
+          res.end(content);
+        }
+      );
+    } else {
+      fs.readFile(
+        path.join(__dirname, "templates", "404.html"),
+        (err, content) => {
+          if (err) throw new Error();
+          res.end(content);
+        }
+      );
+    }
   } else if (req.method === "POST") {
     res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
     const body = [];
