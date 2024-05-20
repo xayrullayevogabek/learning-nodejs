@@ -30,6 +30,14 @@ const server = http.createServer((req, res) => {
           res.end(content);
         }
       );
+    } else if (req.url === "/api/admin") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      const admin = {
+        name: "Admin",
+        surname: "Adminov",
+        job: "Full-Stack Developer",
+      };
+      res.end(JSON.stringify(admin));
     } else {
       fs.readFile(
         path.join(__dirname, "templates", "404.html"),
