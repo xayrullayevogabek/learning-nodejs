@@ -1,0 +1,1 @@
+console.log("This file is created by nodejs fs module")
